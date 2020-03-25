@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <style>
+    canvas {
+    position:fixed;
+    left:0;
+    top:0;
+    background-color:black;
+    }
+  </style>
+
+  <body>
+    <canvas id="canvas00" width="500" height="500">
+    </canvas>
+  </<body>
+  <script type="text/javascript">
+    var c = document.getElementById("canvas00");
+    var ctx = c.getContext("2d");
+    ctx.translate(250,250);
+
+    var theta=0;
+    function draw(){
+    ctx.clearRect(-500,-500,1000,1000);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(-15+Math.cos(theta*0.01)*100,-15,30,30);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(-15,-15+Math.sin(theta*0.01)*100,30,30);
+    ctx.save();
+    ctx.rotate(theta*0.01);
+    ctx.fillStyle = 'green';
+    ctx.fillRect(100-15,-15,30,30);
+    ctx.restore();
+    theta++
+    }
+    function draw2(){
+
+    }
+    setInterval(draw,1);
+  </script>
+</html>

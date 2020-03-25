@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+
+  <style>
+  </style>
+
+  <body>
+    <script type="text/javascript" src="../Plotting_tools/plot.js"></script>//load canvas ploting script
+
+    <h1>Time Domain</h1>
+    <script>
+    var data=[];
+    for(let i=0;i<20;i++){
+      data.push(1);
+    }
+    for(let i=0;i<40;i++){
+      data.push(-1);
+    }
+    for(let i=0;i<20;i++){
+      data.push(1);
+    }
+    var size=[500,250]
+    var plot1=new plot("time_domain_plot",data,size);
+    setInterval(move,50);
+    function move(){
+      plot1.redraw
+    }
+
+    </script>
+    <h1>Wave Form</h1>
+    <script>
+    var plot2=new plot("time_domain_plot",data,size);
+    </script>
+
+    <h1>Frequency Domain</h1>
+    <script type="text/javascript" src="DFT.js"></script>
+    <script>
+    var X_k=DFT(data);
+    var plot3=new plot("frequncy_domain_plot",X_k[2],size);
+    //console.log('X_k_a',X_k[0]);
+    //console.log('X_k_b',X_k[1]);
+    //console.log('X_k_c',X_k[2]);
+    </script>
+    <!--
+    <h1>Fourier coeffiency</h1>
+    <script>
+    var data2=[];
+    var s=Math.PI*2/40;
+    for(let i=0;i<200;i++){
+      data2.push(Math.cos(2*s*i));
+    }
+    console.log(data2);
+    var y_lim=[-1,1]
+    var size=[500,250];
+    var plot4=new plot_fixed_y("xx",data2,size,y_lim);
+    </script>
+    -->
+    <h1>Animation</h1>
+    <canvas id="animation" width=400 height=400 ></canvas>
+    <script>
+    X_theta=[];
+    X_k_a=X_k[0];
+    X_k_b=X_k[1];
+    X_k_c=X_k[2];
+    for(i=0;i<X_k_a.length;i++){
+      if(X_k_a[i]!=0){
+        var theta=Math.atan(X_k_b[i]/X_k_a[i]);
+        X_theta.push(theta);
+      }else{
+        X_theta.push(0);
+      }
+
+    }
+    //console.log(X_theta);
+    setInterval(rotate,1);
+    var t=0;
+    var canvas=document.getElementById('animation')
+    var ctx=canvas.getContext('2d')
+
+    ctx.translate(200,200);
+    function rotate(){
+        //ctx.clearRect(-200,-200,400,400)
+        var x=0;
+        var y=0;
+        for(let i=0;i<40;i++){
+          x=x+X_k_c[i]*Math.cos(2*Math.PI*i*t/80+X_theta[i]);
+          y=y-X_k_c[i]*Math.sin(2*Math.PI*i*t/80+X_theta[i]);
+        }
+        //console.log(X_k_c);
+        ctx.fillRect(x,y,3,3);
+        //ctx.fillRect(t-200,y,3,3);
+        t=t+0.1;
+        console.log(y);
+    }
+    </script>
+  </body>
+
+</html>
