@@ -86,7 +86,7 @@
           displayMat.convertTo(displayMat, -1, 3, -100);
           displayMat2=displayMat.clone();
           cv.cvtColor(displayMat2, displayMat2, cv.COLOR_RGBA2GRAY);
-          cv.Canny(displayMat2,edgeMat,param1,100);
+          cv.Canny(displayMat2,edgeMat,param1,param1/2);
           cv.HoughCircles(displayMat2, circlesMat, cv.HOUGH_GRADIENT,dp,minDist,param1,param2,minRadius,maxRadius);
           for (let i = 0; i < circlesMat.cols; ++i) {
               let x = circlesMat.data32F[i * 3];
