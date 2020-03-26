@@ -75,7 +75,7 @@
           let minRadius=parseFloat(document.getElementById("minRadius").value)
           let maxRadius=parseFloat(document.getElementById("maxRadius").value)
           let srcMat = cv.imread('original');
-          let dsize = new cv.Size(300, 200);
+          let dsize = new cv.Size(srcMat.size().width/2 , srcMat.size().height/2 );
           cv.resize(srcMat, srcMat, dsize, 0, 0, cv.INTER_AREA);
           let edgeMat=new cv.Mat();
           let gaussMat=new cv.Mat();
